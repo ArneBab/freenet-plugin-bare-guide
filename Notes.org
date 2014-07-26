@@ -1,0 +1,38 @@
+#+title: Implementing a Freenet plugin
+
+#+BEGIN_ABSTRACT
+I wanted to try building my own Freenet plugin for years. Last year Thomas wrote the [[https://wiki.freenetproject.org/Plugin_development_tutorial][Practical Plugin Development Tutorial]]. This finally gave me what I needed: How to build a plugin with a simple web frontend. So it’s time to try.
+#+END_ABSTRACT
+
+* Bare Emacs
+
+The tutorial does not list imports and all that, so I assume that Thomas works in a fully preconfigured Eclipse. I just use a bare emacs. Also Thomas lists a working brain and sufficient Java knowledge as prerequisites. While my brain currently halfways works, I cannot really claim lots of Java skills.
+
+So I will actually spell out what I needed to do.
+
+* Bare Bones
+
+The bare bones plugin can only be started and shut down. Thomas says I need this:
+
+#+BEGIN_SRC java
+  package hello.world
+      
+  public class MyApplication extends FredPlugin {
+      
+      private final static Logger LOGGER = Logger.getLogger(MyApplication.class.getName());
+  
+      public void runPlugin(PluginRespirator pr)
+      {}
+      
+      public void terminate()
+      {}
+  }
+#+END_SRC
+
+Let’s look at an example plugin what to do with this…
+
+There is [[https://github.com/freenet/plugin-HelloWorld][plugin-HelloWorld]]. It puts the code into =src/plugins/HelloWorld=. But since we’re using package hello.world, I guess we have to put our code into =src/plugins/hello.world=.
+
+It’s time to start committing.
+
+* Bare Skin
