@@ -1,11 +1,20 @@
-package hello.world
+package plugins.hello.world;
 
-    public class MyApplication extends FredPlugin {
-    
-    private final static Logger LOGGER = Logger.getLogger(MyApplication.class.getName());
+import freenet.pluginmanager.*;
+import freenet.support.Logger;
+
+public class MyApplication implements FredPlugin {
+    PluginRespirator pr;
+
+    static {
+        Logger.registerClass(MyApplication.class);
+    }
     
     public void runPlugin(PluginRespirator pr)
-    {}
+    {
+        this.pr = pr;
+        Logger.error(this, "FOOBAR MYAPPLICATION HELLO WORLD");
+    }
     
     public void terminate()
     {}

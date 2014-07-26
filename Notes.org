@@ -15,12 +15,12 @@ So I will actually spell out what I needed to do.
 The bare bones plugin can only be started and shut down. Thomas says I need this:
 
 #+BEGIN_SRC java
-  package hello.world
+  package hello.world;
       
   public class MyApplication extends FredPlugin {
       
       private final static Logger LOGGER = Logger.getLogger(MyApplication.class.getName());
-  
+      
       public void runPlugin(PluginRespirator pr)
       {}
       
@@ -31,8 +31,158 @@ The bare bones plugin can only be started and shut down. Thomas says I need this
 
 Let’s look at an example plugin what to do with this…
 
-There is [[https://github.com/freenet/plugin-HelloWorld][plugin-HelloWorld]]. It puts the code into =src/plugins/HelloWorld=. But since we’re using package hello.world, I guess we have to put our code into =src/plugins/hello.world=.
+There is [[https://github.com/freenet/plugin-HelloWorld][plugin-HelloWorld]]. It puts the code into =src/plugins/HelloWorld=. But since we’re using package hello.world, I guess we have to put our code into =src/plugins/hello/world=.
 
 It’s time to start committing.
 
+The code above is now in src/plugins/hello/world. I changed the package to plugins.hello.world.
+
+Now let’s add the build.xml. By just copying it from the HelloWorld plugin:
+
+#+BEGIN_SRC sh
+wget https://raw.githubusercontent.com/freenet/plugin-HelloWorld/master/build.xml
+#+END_SRC
+
+My freenet.jar is in a different place. I adjust the build.xml to use the freenet.jar from my freenet install:
+
+#+BEGIN_SRC sh
+sed -i s/location=\\\"..\\/fred\\/dist/location=\\\"..\\/freenet/ build.xml
+sed -i s/location=\\\"..\\/fred\\/lib/location=\\\"..\\/freenet/ build.xml
+#+END_SRC
+
+Also I have to change all instances of HelloWorld in the build.xml by my names.
+
+#+BEGIN_SRC sh
+sed -i s/plugins\\/HelloWorld/plugins\\/hello\\/world/ build.xml
+sed -i s/HelloWorld\\.jar/MyApplication\\.jar/ build.xml
+sed -i s/plugins\\.HelloWorld\\.HelloWorld/plugins\\.hello\\.world\\.MyApplication/ build.xml
+#+END_SRC
+
+Now run ant.
+
+#+BEGIN_SRC sh
+ant
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+    [javac] /home/arne/freenet-plugin-something/src/plugins/hello/MyApplication.java:3: error: cannot find symbol
+    [javac] public class MyApplication extends FredPlugin {
+#+END_EXAMPLE
+
+which fails - because I don’t have any imports yet. Let’s snarf these from the [[https://wiki.freenetproject.org/Plugin_API][Plugin API]] and get some more from the WoT.
+
+#+BEGIN_SRC java
+import freenet.pluginmanager.*;
+import freenet.support.Logger;
+#+END_SRC
+
+and try again.
+
+#+BEGIN_SRC sh
+ant
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+    [javac] /home/arne/freenet-plugin-something/src/plugins/hello/MyApplication.java:5: error: no interface expected here
+    [javac] public class MyApplication extends FredPlugin {
+#+END_EXAMPLE
+
+A quick look at the [[https://github.com/freenet/plugin-WebOfTrust/blob/master/src/plugins/WebOfTrust/WebOfTrust.java][Web of Trust plugin]] (one of the few which avoids maven which as I learned does not allow checking whether dependencies are actually trustworthy) shows that it has to be /implements/, not /extends/.
+
+Let’t try again.
+
+#+BEGIN_SRC sh
+ant
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+    [javac] /home/arne/freenet-plugin-something/src/plugins/hello/MyApplication.java:8: error: cannot find symbol
+    [javac]     private final static Logger LOGGER = Logger.getLogger(MyApplication.class.getName());
+#+END_EXAMPLE
+
+Dafug, the logger doesn’t compile?
+
+Just delete it.
+
+#+BEGIN_SRC sh
+ant
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+      [jar] Building jar: /home/arne/freenet-plugin-something/dist/MyApplication.jar
+
+BUILD SUCCESSFUL
+#+END_EXAMPLE
+
+YAY!
+
+Let’s add it to the running [[http://127.0.0.1:8888/plugins/][plugins]] and see whether it works.
+
+Hm, I don’t see anything. But should I?
+
+Let’s steal the Logger from the Web of Trust:
+
+#+BEGIN_SRC java
+  static {
+      Logger.registerClass(MyApplication.class);
+  }
+#+END_SRC
+
+That compiles, but I still don’t see my plugin in the list.
+
+So, let’s log an error on startup:
+#+BEGIN_SRC java
+    public void runPlugin(PluginRespirator pr)
+    {
+        Logger.error(this, "FOOBAR MYAPPLICATION HELLO WORLD");
+    }
+
+#+END_SRC
+
+Then wait some time until the [[http://127.0.0.1:8888/?latestlog][latest logs]] are saved, and… *drumroll*
+
+#+BEGIN_EXAMPLE
+(plugins.hello.world.MyApplication, pplugins.hello.world.MyApplication_1265709301, ERROR): FOOBAR MYAPPLICATION HELLO WORLD
+#+END_EXAMPLE
+
+Success! Our Bare Bones plugin works!
+
+Here’s the full code:
+
+#+BEGIN_SRC java
+package plugins.hello.world;
+
+import freenet.pluginmanager.*;
+import freenet.support.Logger;
+
+public class MyApplication implements FredPlugin {
+    PluginRespirator pr;
+
+    static {
+        Logger.registerClass(MyApplication.class);
+    }
+    
+    public void runPlugin(PluginRespirator pr)
+    {
+        this.pr = pr;
+        Logger.error(this, "FOOBAR MYAPPLICATION HELLO WORLD");
+    }
+    
+    public void terminate()
+    {}
+}
+#+END_SRC
+
+Now we can go on to something which is actually useful ☺
+
 * Bare Skin
+
+- Web interface
+
+* Bare Words
+
+- Jython!
+
+* Bare Handed
+
+- to be thought about :)
