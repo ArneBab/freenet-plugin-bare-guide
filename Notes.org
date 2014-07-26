@@ -189,7 +189,48 @@ Now we can go on to something which is actually useful ☺
 
 * Bare Skin
 
-- Web interface
+The next step for a useful plugin is a user interface. In the case of freenet this is ideally a web interface - integrated directly into the freenet web interface.
+
+Let’s look again what Thomas says: Just add a method =setupWebInterface()= and run that in =runPlugin()=.
+
+#+BEGIN_SRC java
+  import plugins.WebOfTrust.ui.web.WebInterface;
+  ...
+      public void runPlugin(PluginRespirator pr)
+      {
+          setupWebInterface();
+      }
+#+END_SRC
+
+#+BEGIN_SRC java
+    private void setupWebInterface()
+    {
+        PluginContext pluginContext = new PluginContext(pr);
+        this.webInterface = new WebInterface(pluginContext);
+        
+        pr.getPageMaker().addNavigationCategory(basePath + "/","WebOfTrust.menuName.name", "WebOfTrust.menuName.tooltip", this);
+        ToadletContainer tc = pr.getToadletContainer();
+        
+        // pages
+        Overview oc = new Overview(this, pr.getHLSimpleClient(), basePath, db);
+        
+        // create fproxy menu items
+        tc.register(oc, "WebOfTrust.menuName.name", basePath + "/", true, "WebOfTrust.mainPage", "WebOfTrust.mainPage.tooltip", WebOfTrust.allowFullAccessOnly, oc);
+        tc.register(oc, null, basePath + "/", true, WebOfTrust.allowFullAccessOnly);
+        
+        // register other toadlets without link in menu but as first item to check
+        // so it also works for paths which are included in the above menu links.
+        // full access only will be checked inside the specific toadlet
+        for(Toadlet curToad : newToadlets) {
+            tc.register(curToad, null, curToad.path(), true, false);
+        }
+        
+        // finally add toadlets which have been registered within the menu to our list
+        newToadlets.add(oc);
+    }
+#+END_SRC
+
+So let’s see whether we can turn this into working code: Just a website which shows its skin. And maybe Hello World ☺.
 
 * Bare Words
 
