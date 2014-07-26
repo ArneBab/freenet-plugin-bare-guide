@@ -97,6 +97,20 @@
 	</target>
 
 	<!-- ================================================== -->
+	<target name="bones" depends="clean,compile,junit"
+		description="generate the distribution" >
+		<jar jarfile="${dist}/BareBones.jar" duplicate="fail">
+			<manifest>
+				<attribute name="Plugin-Main-Class" value="plugins.hello.world.BareBones"/>
+			</manifest>
+			<fileset dir="src/" casesensitive="no">
+				<include name="*.txt"/>
+			</fileset>
+			<fileset dir="${build}/"/>
+		</jar>
+	</target>
+
+	<!-- ================================================== -->
 	<target name="clean" description="Delete class files and docs dir.">
 		<delete dir="${build}"/>
 		<delete dir="${build-test}"/>

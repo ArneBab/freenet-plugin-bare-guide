@@ -177,8 +177,12 @@ Let’s give it a final facelift and call it BareBones
 
 #+BEGIN_SRC sh
 sed -i s/MyApplication/BareBones/ build.xml
-hg cp src/plugins/hello/world/MyApplication.java src/plugins/hello/world/BareBones.java
+hg cp src/plugins/hello/MyApplication.java src/plugins/hello/BareBones.java
 #+END_SRC
+
+#+RESULTS:
+
+And after that, just add a bones target which will always build Bare Bones.
 
 Now we can go on to something which is actually useful ☺
 
