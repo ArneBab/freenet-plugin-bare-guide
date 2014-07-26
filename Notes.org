@@ -232,6 +232,13 @@ Let’s look again what Thomas says: Just add a method =setupWebInterface()= and
 
 So let’s see whether we can turn this into working code: Just a website which shows its skin. And maybe Hello World ☺.
 
+...
+
+I really don’t want to talk about the last hour. The plugin now almost works as intended. It shows Hello World. It is not yet visible in the list of plugins. I have to fix that, so it becomes possible to unload and reload it.
+
+And I really need a Java-Setup for Emacs. Without something which can figure out imports and give me the API for every symbol in Freenet, it is close to impossible to work with this.
+
+
 * Bare Words
 
 - Jython!
