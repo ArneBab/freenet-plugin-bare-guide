@@ -3,11 +3,11 @@ package plugins.hello.world;
 import freenet.pluginmanager.*;
 import freenet.support.Logger;
 
-public class MyApplication implements FredPlugin {
+public class BareBones implements FredPlugin {
     PluginRespirator pr;
 
     static {
-        Logger.registerClass(MyApplication.class);
+        Logger.registerClass(BareBones.class);
     }
     
     public void runPlugin(PluginRespirator pr)

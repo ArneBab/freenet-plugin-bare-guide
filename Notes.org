@@ -178,6 +178,7 @@ Let’s give it a final facelift and call it BareBones
 #+BEGIN_SRC sh
 sed -i s/MyApplication/BareBones/ build.xml
 hg cp src/plugins/hello/MyApplication.java src/plugins/hello/BareBones.java
+sed -i s/MyApplication/BareBones/ src/plugins/hello/BareBones.java
 #+END_SRC
 
 #+RESULTS:
