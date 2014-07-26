@@ -173,6 +173,13 @@ public class MyApplication implements FredPlugin {
 }
 #+END_SRC
 
+Let’s give it a final facelift and call it BareBones
+
+#+BEGIN_SRC sh
+sed -i s/MyApplication/BareBones/ build.xml
+hg cp src/plugins/hello/world/MyApplication.java src/plugins/hello/world/BareBones.java
+#+END_SRC
+
 Now we can go on to something which is actually useful ☺
 
 * Bare Skin
@@ -186,3 +193,5 @@ Now we can go on to something which is actually useful ☺
 * Bare Handed
 
 - to be thought about :)
+* Bare Dance
+- something fun
