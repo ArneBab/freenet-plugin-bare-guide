@@ -19,13 +19,19 @@ import plugins.hello.world.Overview;
 
 
 public class MyApplication implements FredPlugin, FredPluginL10n {
-    PluginRespirator pr;
+    private PluginRespirator pluginRespirator;
+    private ToadletContainer tc;
     // path used to access the plugin web interface
     public static String basePath = "/MyApplication";
     // WebInterface accessor
     public WebInterface webInterface;
     // Overview page
-    public Overview oc;
+    private Overview oc;
+    public static final String encoding = "UTF-8";
+
+    public String getVersion() {
+        return "0.1-SNAPSHOT";
+    }
 
     static {
         Logger.registerClass(MyApplication.class);
@@ -34,7 +40,8 @@ public class MyApplication implements FredPlugin, FredPluginL10n {
     @Override
     public void runPlugin(PluginRespirator pr)
     {
-        this.pr = pr;
+        pluginRespirator = pr;
+        tc = pr.getToadletContainer();
         Logger.error(this, "FOOBAR MYAPPLICATION WEBINTERFACE HELLO WORLD");
         setupWebInterface();
     }
@@ -44,7 +51,7 @@ public class MyApplication implements FredPlugin, FredPluginL10n {
     {
         pr.getToadletContainer().unregister(this.oc);
     }
-
+    
     // L10n stuff
     public void setLanguage(LANGUAGE newLanguage) {
         Logger.error(this, "Not implemented: Should set LANGUAGE to: " + newLanguage.isoCode);
@@ -56,17 +63,18 @@ public class MyApplication implements FredPlugin, FredPluginL10n {
     private void setupWebInterface()
     {
         PluginContext pluginContext = new PluginContext(pr);
-        this.webInterface = new WebInterface(pluginContext);
+        webInterface = new WebInterface(pluginContext);
         
-        pr.getPageMaker().addNavigationCategory(basePath + "/","MyApplication.menuName.name", "MyApplication.menuName.tooltip", this);
-        ToadletContainer tc = pr.getToadletContainer();
+        pluginRespirator.getPageMaker().addNavigationCategory(basePath + "/","MyApplication.menuName.name", "MyApplication.menuName.tooltip", this);
         
         // pages
-        this.oc = new Overview(pr.getHLSimpleClient(), basePath, "");
+        oc = new Overview(pr.getHLSimpleClient(), basePath, "");
         
         // create fproxy menu items
-        tc.register(oc, "MyApplication.menuName.name", basePath + "/", true, "MyApplication.mainPage", "MyApplication.mainPage.tooltip", false, oc, this); // false: MyApplication.allowFullAccessOnly
-        tc.register(oc, null, basePath + "/", true, false); // false: do we want to restrict to full access?
+        String menuName = "MyApplication";
+        pluginRespirator.getPageMaker().addNavigationCategory(basePath, menuName, menuName, this);
+        tc.register(oc, menuName, basePath + "/", true, menuName, "tooltip", false, oc); // false: MyApplication.allowFullAccessOnly
+        // tc.register(oc, null, basePath + "/", true, false); // false: do we want to restrict to full access?
         
         // register other toadlets without link in menu but as first item to check
         // so it also works for paths which are included in the above menu links.
