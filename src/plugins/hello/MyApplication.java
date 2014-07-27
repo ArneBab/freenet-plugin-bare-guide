@@ -49,7 +49,7 @@ public class MyApplication implements FredPlugin, FredPluginL10n {
     @Override
     public void terminate()
     {
-        pr.getToadletContainer().unregister(this.oc);
+        pluginRespirator.getToadletContainer().unregister(this.oc);
     }
     
     // L10n stuff
@@ -62,13 +62,13 @@ public class MyApplication implements FredPlugin, FredPluginL10n {
 
     private void setupWebInterface()
     {
-        PluginContext pluginContext = new PluginContext(pr);
+        PluginContext pluginContext = new PluginContext(pluginRespirator);
         webInterface = new WebInterface(pluginContext);
         
         pluginRespirator.getPageMaker().addNavigationCategory(basePath + "/","MyApplication.menuName.name", "MyApplication.menuName.tooltip", this);
         
         // pages
-        oc = new Overview(pr.getHLSimpleClient(), basePath, "");
+        oc = new Overview(pluginRespirator.getHLSimpleClient(), basePath, "");
         
         // create fproxy menu items
         String menuName = "MyApplication";
