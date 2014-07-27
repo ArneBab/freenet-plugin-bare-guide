@@ -1,0 +1,5 @@
+#+title: Implementing a Freenet plugin
+
+Read Notes.org for the guide (with personal comments).
+
+Run =ant= to build the plugin.
