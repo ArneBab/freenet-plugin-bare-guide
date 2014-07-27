@@ -242,6 +242,7 @@ I really don’t want to talk about the last hour. The plugin now almost works a
 
 And I really need a Java-Setup for Emacs. Without something which can figure out imports and give me the API for every symbol in Freenet, it is close to impossible to work with this.
 
+Also the plugin needs lots of cleaning up. I should have went the sane route from the start and chosen a sane, minimal plugin as base: The [[https://github.com/Thynix/plugin-DVCS-WebUI][plugin-DVCS-WebUI]]. It shows how a Plugin should be created. Also I was mentor in the GSoC project (Infocalypse Web of Trust) during which Steve created it, so I really have no excuse for not using this really nice code in my bare tutorial.
 
 * Bare Words
 
