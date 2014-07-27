@@ -244,12 +244,15 @@ And I really need a Java-Setup for Emacs. Without something which can figure out
 
 Also the plugin needs lots of cleaning up. I should have went the sane route from the start and chosen a sane, minimal plugin as base: The [[https://github.com/Thynix/plugin-DVCS-WebUI][plugin-DVCS-WebUI]]. It shows how a Plugin should be created. Also I was mentor in the GSoC project (Infocalypse Web of Trust) during which Steve created it, so I really have no excuse for not using this really nice code in my bare tutorial.
 
+* Bare Face
+- Include the menu: Make the web interface integrate with fproxy.
 * Bare Words
-
-- Jython!
-
+- Include Jython
 * Bare Handed
-
 - to be thought about :)
 * Bare Dance
 - something fun
+* Bare Back
+- jython-interpreter
+* Bare Chest
+- FCP API to jython
