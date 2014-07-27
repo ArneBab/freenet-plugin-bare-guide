@@ -200,6 +200,10 @@ Let’s look again what Thomas says: Just add a method =setupWebInterface()= and
       {
           setupWebInterface();
       }
+      public void terminate();
+      {
+          pr.getToadletContainer().unregister(this.oc);
+      }
 #+END_SRC
 
 #+BEGIN_SRC java
@@ -212,7 +216,7 @@ Let’s look again what Thomas says: Just add a method =setupWebInterface()= and
         ToadletContainer tc = pr.getToadletContainer();
         
         // pages
-        Overview oc = new Overview(this, pr.getHLSimpleClient(), basePath, db);
+        this.oc = new Overview(this, pr.getHLSimpleClient(), basePath, db);
         
         // create fproxy menu items
         tc.register(oc, "WebOfTrust.menuName.name", basePath + "/", true, "WebOfTrust.mainPage", "WebOfTrust.mainPage.tooltip", WebOfTrust.allowFullAccessOnly, oc);

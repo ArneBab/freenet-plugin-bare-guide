@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- ant build file for Freenet -->
 
-<project name="Freenet" default="dist" basedir=".">
+<project name="MyApplication" default="dist" basedir=".">
 	<property name="freenet-cvs-snapshot.location" location="../freenet/freenet.jar"/>
 	<property name="freenet-ext.location" location="../freenet/freenet-ext.jar"/>
 	<property name="svn.revision" value="@custom@"/>
@@ -24,7 +24,7 @@
 	<target name="setver" if="version.present">
 		<!-- Update the Version file -->
 		<replace file="src/plugins/hello/world/Version.java">
-			<replacefilter token="@custom@" value="${svn.revision}"/>
+			<replacefilter token="@custom@" value="foobar"/>
 		</replace>
 	</target>
 

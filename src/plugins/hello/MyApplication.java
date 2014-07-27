@@ -20,13 +20,18 @@ import plugins.hello.world.Overview;
 
 public class MyApplication implements FredPlugin, FredPluginL10n {
     PluginRespirator pr;
+    // path used to access the plugin web interface
     public static String basePath = "/MyApplication";
+    // WebInterface accessor
     public WebInterface webInterface;
-    
+    // Overview page
+    public Overview oc;
+
     static {
         Logger.registerClass(MyApplication.class);
     }
     
+    @Override
     public void runPlugin(PluginRespirator pr)
     {
         this.pr = pr;
@@ -34,8 +39,11 @@ public class MyApplication implements FredPlugin, FredPluginL10n {
         setupWebInterface();
     }
     
+    @Override
     public void terminate()
-    {}
+    {
+        pr.getToadletContainer().unregister(this.oc);
+    }
 
     // L10n stuff
     public void setLanguage(LANGUAGE newLanguage) {
@@ -54,7 +62,7 @@ public class MyApplication implements FredPlugin, FredPluginL10n {
         ToadletContainer tc = pr.getToadletContainer();
         
         // pages
-        Overview oc = new Overview(pr.getHLSimpleClient(), basePath, "");
+        this.oc = new Overview(pr.getHLSimpleClient(), basePath, "");
         
         // create fproxy menu items
         tc.register(oc, "MyApplication.menuName.name", basePath + "/", true, "MyApplication.mainPage", "MyApplication.mainPage.tooltip", false, oc, this); // false: MyApplication.allowFullAccessOnly
@@ -72,3 +80,6 @@ public class MyApplication implements FredPlugin, FredPluginL10n {
     }
 }
 
+// private class Resources {
+//     
+// }
