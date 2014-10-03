@@ -2,6 +2,14 @@
 
 #+BEGIN_ABSTRACT
 I wanted to try building my own Freenet plugin for years. Last year Thomas wrote the [[https://wiki.freenetproject.org/Plugin_development_tutorial][Practical Plugin Development Tutorial]]. This finally gave me what I needed: How to build a plugin with a simple web frontend. So it’s time to try.
+
+You can get this repo with infocalypse using
+
+#+BEGIN_SRC sh
+hg clone freenet://USK@Sf3FBTeLwsLuK0o8u~gcFi9uFw~Dt6O718Qreixv43w,NE-xojH2srg4n7Up9bEAehR5WyP6ea-5S4rLwd6HwrQ,AQACAAE/freenet-plugin-bare.R1/0
+#+END_SRC
+
+Or [[https://github.com/ArneBab/freenet-plugin-bare-guide][from github]].
 #+END_ABSTRACT
 
 * Bare Emacs
