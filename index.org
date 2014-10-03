@@ -10,6 +10,8 @@ hg clone freenet://USK@Sf3FBTeLwsLuK0o8u~gcFi9uFw~Dt6O718Qreixv43w,NE-xojH2srg4n
 #+END_SRC
 
 Or [[https://github.com/ArneBab/freenet-plugin-bare-guide][from github]].
+
+If you want to join in, please clone the repo and just start writing. You likely have more free time for it that me, so just go for it!
 #+END_ABSTRACT
 
 * Bare Emacs
