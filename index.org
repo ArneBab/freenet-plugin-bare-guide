@@ -14,6 +14,14 @@ Or [[https://github.com/ArneBab/freenet-plugin-bare-guide][from github]].
 If you want to join in, please clone the repo and just start writing. You likely have more free time for it that me, so just go for it!
 #+END_ABSTRACT
 
+* Bare Need
+
+You could ask, “why this site?”
+
+Isn’t there lots of documentation on writing plugins? Well, [[/USK@cF9ctaSzA8w2JAfEqmIlN49tfrPdz2Q5M68m1m5r9W0,NQiPGX7tNcaXVRXljGJnFlKhnf0eozNQsb~NwmBAJ4k,AQACAAE/Fritter-site/2/documentation_rant.html][actually not]]. And where it is, it is often misleading. The link points to a rant from the developer of Fritter. I agree with that rant.
+
+That’s what this tutorial intends to change.
+
 * Bare Emacs
 
 The tutorial from Thomas does not list imports and all that, so I assume that Thomas works in a fully preconfigured Eclipse. I just use a bare emacs. Also Thomas lists a working brain and sufficient Java knowledge as prerequisites. While my brain currently halfways works, I cannot really claim lots of Java skills.
