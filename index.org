@@ -271,10 +271,12 @@ To go forward, I really need better java integration. There are several options:
 - [[https://github.com/senny/emacs-eclim][Emacs Eclim]] provides Eclipse editing features as server, so I can use them from Emacs without having to use the Eclipse User Interface.
 - [[http://cedet.sourceforge.net/intellisense.shtml][CEDET]] provides project management and API docs and such using the Semantic project analyzer.
 
-I prefer using the native Emacs version, so I’ll go with CEDET.
+I prefer using the native Emacs version, so I’ll go with CEDET, but add a bit of flymake with ECJ, because that’s loosely coupled.
 
 #+BEGIN_SRC elisp
   (require 'cedet)
+  (require 'semantic)
+  (load "semantic/loaddefs.el")
   (require 'semantic/bovine/gcc)
   (require 'semantic/java)
   (add-hook 'java-mode-hook 
@@ -282,6 +284,7 @@ I prefer using the native Emacs version, so I’ll go with CEDET.
   (add-to-list 'semantic-default-submodes 'global-semantic-decoration-mode)
   (add-to-list 'semantic-default-submodes 'global-semantic-idle-completions-mode)
   (add-to-list 'semantic-default-submodes 'global-semantic-idle-summary-mode)
+  (add-to-list 'semantic-default-submodes 'global-semantic-mru-bookmark-mode)
   (semantic-mode t)
   ; projects
   (require 'ede)
