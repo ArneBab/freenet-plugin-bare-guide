@@ -263,6 +263,10 @@ And I really need a Java-Setup for Emacs. Without something which can figure out
 
 Also the plugin needs lots of cleaning up. I should have went the sane route from the start and chosen a sane, minimal plugin as base: The [[https://github.com/Thynix/plugin-DVCS-WebUI][plugin-DVCS-WebUI]]. It shows how a Plugin should be created. Also I was mentor in the GSoC project (Infocalypse Web of Trust) during which Steve created it, so I really have no excuse for not using this really nice code in my bare tutorial.
 
+* Bare Eclim
+
+To go forward, I really need better javadoc integration. [[https://github.com/senny/emacs-eclim][Emacs Eclim]] provides that: Eclipse editing features as server, so I can use them from Emacs without having to use the Eclipse User Interface.
+
 * Bare Face
 - Include the menu: Make the web interface integrate with fproxy.
 * Bare Words
