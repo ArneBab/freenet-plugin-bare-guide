@@ -289,18 +289,21 @@ I prefer using the native Emacs version, so I’ll go with CEDET, but add a bit 
   ; projects
   (require 'ede)
   (global-ede-mode t)
-  (ede-java-root-project "Bare"
-         :file "~/freenet-plugin-bare/build.xml"
-         :srcroot '("src")
-         ; :localclasspath '("/relative/path.jar")
-         :classpath '("/home/arne/freenet/freenet.jar" 
-                      "/home/arne/freenet/freenet-ext.jar"))
+  (defvar freenet-plugin-bare-java-classpath '("/home/arne/freenet/freenet.jar" 
+                      "/home/arne/freenet/freenet-ext.jar" "/home/arne/Quell/Programme/freenet/freenet.jar" 
+                      "/home/arne/Quell/Programme/freenet/freenet-ext.jar"))
+  (ede-project "Freenet-Bare")
+  ; (ede-java-root-project "Bare"
+  ;        :file "~/freenet-plugin-bare/build.xml"
+  ;        :srcroot '("src")
+  ;        ; :localclasspath '("/relative/path.jar")
+  ;        :classpath freenet-plugin-bare-java-classpath)
   ; also I want flymake. I use ECJ for that.
   ; flymake setup, see http://graflex.org/klotz/weblog/2008/02/java-error-highlighting-in-emacs.html
   ; and http://tkj.freeshell.org/emacs/java/
   (require 'flymake)
 
-  (defvar flymake-java-classpath "/home/arne/freenet/freenet.jar:/home/arne/freenet/freenet-ext.jar:/home/arne/freenet-plugin-bare/:.")
+  (defvar flymake-my-java-classpath (mapconcat 'identity freenet-plugin-bare-java-classpath ":")) 
 
   (defun flymake-java-ecj-init ()
     (let* ((temp-file (flymake-init-create-temp-buffer-copy
@@ -326,8 +329,8 @@ I prefer using the native Emacs version, so I’ll go with CEDET, but add a bit 
                                      (expand-file-name  (int-to-string (abs (random))) (flymake-get-temp-dir)))))
       
 
-  (push '(".+\\.java$" flymake-java-ecj-init 
-          flymake-java-ecj-cleanup) flymake-allowed-file-name-masks)
+  (push '(".+\\.java$" flymake-simple-ant-java-init
+          flymake-simple-java-cleanup) flymake-allowed-file-name-masks)
 
   (push '("\\(.*?\\):\\([0-9]+\\): error: \\(.*?\\)\n" 1 2 nil 2 3
           (6 compilation-error-face)) compilation-error-regexp-alist)
@@ -361,6 +364,9 @@ I prefer using the native Emacs version, so I’ll go with CEDET, but add a bit 
     (credmp/flymake-display-err-minibuf))
 
 #+END_SRC
+
+#+RESULTS:
+: show-next-error
 
 
 
