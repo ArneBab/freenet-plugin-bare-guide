@@ -291,11 +291,13 @@ I prefer using the native Emacs version, so I’ll go with CEDET, but add a bit 
   (global-ede-mode t)
   (defvar freenet-plugin-bare-java-classpath '("/home/arne/freenet/freenet.jar" 
                       "/home/arne/freenet/freenet-ext.jar" "/home/arne/Quell/Programme/freenet/freenet.jar" 
-                      "/home/arne/Quell/Programme/freenet/freenet-ext.jar"))
+                      "/home/arne/Quell/Programme/freenet/freenet-ext.jar"
+                      "/home/arne/Quell/Programme/freenet-plugin-bare/src"
+                      "/home/arne/Quell/Programme/freenet/fred-staging/src"))
   (ede-project "Freenet-Bare")
   ; this will take some time: It will parse fred-staging.
-  (semantic-add-system-include "/home/arne/Quell/Programme/freenet/fred-staging" 'jde-mode)
-  (semantic-add-system-include "/home/arne/fred-staging" 'jde-mode)
+  (semantic-add-system-include "/home/arne/Quell/Programme/freenet/fred-staging/src" 'jde-mode)
+  (semantic-add-system-include "/home/arne/fred-staging/src" 'jde-mode)
   ; (ede-java-root-project "Bare"
   ;        :file "~/freenet-plugin-bare/build.xml"
   ;        :srcroot '("src")
@@ -318,7 +320,8 @@ I prefer using the native Emacs version, so I’ll go with CEDET, but add a bit 
       (list "ecj" (list  "-Xemacs" "-d" "none" 
                          "-proceedOnError"
                          "-classpath" flymake-my-java-classpath
-                         "-sourcepath" "/home/arne/freenet-plugin-bare/src/"
+                         "-source" "1.7" "-target" "1.7"
+                         "-sourcepath" "/home/arne/freenet-plugin-bare/src/:/home/arne/Quell/Programme/freenet-plugin-bare/src/"
                          local-file))))
 
   (defun flymake-java-ecj-cleanup ()
@@ -333,8 +336,8 @@ I prefer using the native Emacs version, so I’ll go with CEDET, but add a bit 
                                      (expand-file-name  (int-to-string (abs (random))) (flymake-get-temp-dir)))))
       
 
-;   (push '(".+\\.java$" flymake-simple-ant-java-init
-;           flymake-simple-java-cleanup) flymake-allowed-file-name-masks)
+  ;   (push '(".+\\.java$" flymake-simple-ant-java-init
+  ;           flymake-simple-java-cleanup) flymake-allowed-file-name-masks)
   (push '(".+\\.java$" flymake-java-ecj-init
           flymake-java-ecj-cleanup) flymake-allowed-file-name-masks)
 
@@ -358,16 +361,6 @@ I prefer using the native Emacs version, so I’ll go with CEDET, but add a bit 
                  (line       (flymake-ler-line (nth (1- count) line-err-info-list))))
             (message "[%s] %s" line text)))
         (setq count (1- count)))))
-
-  (defun show-previous-error ()
-    (interactive)
-    (flymake-goto-prev-error)
-    (credmp/flymake-display-err-minibuf))
-
-  (defun show-next-error ()
-    (interactive)
-    (flymake-goto-next-error)
-    (credmp/flymake-display-err-minibuf))
 
 #+END_SRC
 
