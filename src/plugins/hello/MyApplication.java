@@ -15,7 +15,7 @@ import freenet.support.api.HTTPRequest;
 import freenet.support.plugins.helpers1.PluginContext;
 import freenet.support.plugins.helpers1.WebInterface;
 
-import plugins.hello.world.Overview;
+import plugins.hello.Overview;
 
 
 public class MyApplication implements FredPlugin, FredPluginL10n {

@@ -1,4 +1,4 @@
-package plugins.hello.world;
+package plugins.hello;
 
 import java.io.IOException;
 import java.net.URI;
