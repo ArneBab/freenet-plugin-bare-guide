@@ -375,9 +375,10 @@ I prefer using the native Emacs version, so I’ll go with CEDET, but add a bit 
 : show-next-error
 
 
-
 * Bare Face
 - Include the menu: Make the web interface integrate with fproxy.
+* Bare Memory
+- Use pluginstorage for safe persistent data
 * Bare Words
 - Include Jython
 * Bare Handed
