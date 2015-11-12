@@ -3,7 +3,7 @@ package plugins.hello.world;
 import freenet.pluginmanager.*;
 import freenet.support.Logger;
 
-public class BareBones implements FredPlugin {
+public class BareBones implements FredPlugin, FredPluginThreadless {
     PluginRespirator pr;
 
     static {
