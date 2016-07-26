@@ -2,4 +2,4 @@
 
 Read index.org for the guide (with personal comments).
 
-Run =ant= to build the plugin.
+Run =ant= or =make= to build the plugin.
