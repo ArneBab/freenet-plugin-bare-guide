@@ -18,7 +18,7 @@ import freenet.support.plugins.helpers1.WebInterface;
 import plugins.hello.Overview;
 
 
-public class MyApplication implements FredPlugin, FredPluginL10n {
+public class MyApplication implements FredPlugin, FredPluginThreadless, FredPluginL10n {
     private PluginRespirator pluginRespirator;
     private ToadletContainer tc;
     // path used to access the plugin web interface

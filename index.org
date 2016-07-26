@@ -137,7 +137,28 @@ YAY!
 
 Let’s add it to the running [[http://127.0.0.1:8888/plugins/][plugins]] and see whether it works.
 
-Hm, I don’t see anything. But should I?
+The plugin loads, however it does not appear in the plugin list.
+This is because a plugin implementing FredPlugin is considered dead as soon as its run() method exits.
+To ensure our plugin appears in the list, we should either block in our run() method, or implement the convenient FredPluginThreadless interface.
+When the plugin is loaded, fred checks whether FredPluginThreadless is implemented or not, and treats them differently, most importantly, not unloading it as soon as our short run() method ends.
+
+#+BEGIN_SRC java
+  package hello.world;
+      
+  public class MyApplication implements FredPlugin, FredPluginThreadless {
+      
+      private final static Logger LOGGER = Logger.getLogger(MyApplication.class.getName());
+      
+      public void runPlugin(PluginRespirator pr)
+      {}
+      
+      public void terminate()
+      {}
+  }
+#+END_SRC
+
+Note that we must still implement FredPlugin, FredPluginThreadless is simply an empty interface that indicates to Fred to treat our plugin differently.
+Let's also add some logging for further visibility of our plugin.
 
 Let’s steal the Logger from the Web of Trust:
 
@@ -174,7 +195,7 @@ package plugins.hello.world;
 import freenet.pluginmanager.*;
 import freenet.support.Logger;
 
-public class MyApplication implements FredPlugin {
+public class MyApplication implements FredPlugin, FredPluginThreadless {
     PluginRespirator pr;
 
     static {
@@ -257,7 +278,7 @@ So let’s see whether we can turn this into working code: Just a website which 
 
 ...
 
-I really don’t want to talk about the last hour. The plugin now almost works as intended. It shows Hello World. It is not yet visible in the list of plugins. I have to fix that, so it becomes possible to unload and reload it.
+The plugin now shows Hello World.
 
 And I really need a Java-Setup for Emacs. Without something which can figure out imports and give me the API for every symbol in Freenet, it is close to impossible to work with this.
 
